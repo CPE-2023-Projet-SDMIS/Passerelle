@@ -1,0 +1,17 @@
+[Unit]
+Description=Passerelle simulateur
+After=network-online.target
+
+[Service]
+Type=simple
+
+User=1000
+Group=1000
+
+ExecStartPre=cd /home/pi/passerelle-simulateur/ && git pull
+ExecStart=/home/pi/passerelle-simulateur/start.sh
+
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target

@@ -10,7 +10,12 @@ Passerelle micro:bit - Raspberry - API avec MQTT
 ```sh
 git clone https://github.com/CPE-2023-Projet-SDMIS/Passerelle-simulateur.git
 cd passerelle
-./setup.sh 
+./setup.sh
+```
+
+## on raspberry pi :
+```sh
+./install-service.sh
 ```
 
 ## Start
