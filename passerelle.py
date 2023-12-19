@@ -49,7 +49,7 @@ if __name__ == '__main__':
     client = mqtt.Client()
     client.on_connect = on_connect
     client.on_message = on_message
-    client.connect(os.MQTT_BROKER_HOST, os.MQTT_BROKER_PORT, 60)
+    client.connect(os.getenv('MQTT_BROKER_HOST'), os.getenv('MQTT_BROKER_PORT'), 60)
 
     try:
         # Ouvrir le port série
