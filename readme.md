@@ -1,6 +1,6 @@
 # Passerelle
 
-Passerelle sous la forme d'une API.
+Passerelle micro:bit - Raspberry - API avec MQTT
 
 ## Dependencies
   - Python 3.8+

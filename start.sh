@@ -4,4 +4,4 @@
 source _env/bin/activate
 
 # Lancer le script serial_listener.py
-python3 read-micro-bit.py
+python3 passerelle.py
