@@ -21,15 +21,23 @@ def on_message(client, userdata, msg):
         message = msg.payload.decode('utf-8')
         print("event id received via mqtt : " + message)
 
+        if ENV == "prod":
+            json_data = requests.get(API_URL + "/api/passerelle/getEvent?eventid=" + message).text
+        elif ENV == "dev":
+            json_data = '{"sensorID":1,"intensity":5}'
+        print("json data : " + json_data)
 
-        # json_data = requests.get(API_URL + "/api/passerelle/getEvent?eventid=" + message).text
-        json_data = '[{"sensorID":1,"intensity":5},{"sensorID":2,"intensity":5},{"sensorID":5,"intensity":5},{"sensorID":99,"intensity":5}]'
-        data = json.loads(json_data)
+        try:
+            data = json.loads(json_data)
+        except json.decoder.JSONDecodeError:
+            print("the json received by the API is not valid : decode error")
+            print("This is likely due to the requested event not found in the database")
+            return
 
         serial_string = ""
         for i in range(15):
-            if i < len(data):
-                serial_string = serial_string + str(data[i]["sensorID"]) + " " + str(data[i]["intensity"]) + " "
+            if i == 0:
+                serial_string = serial_string + str(data["sensorID"]) + " " + str(data["intensity"]) + " "
             else:
                 serial_string = serial_string + "0 0 "
         serial_string = serial_string[:-1]
@@ -47,6 +55,7 @@ if __name__ == '__main__':
     MQTT_USERNAME = os.getenv('MQTT_USERNAME')
     MQTT_PASSWORD = os.getenv('MQTT_PASSWORD')
     API_URL = os.getenv('API_URL')
+    ENV = os.getenv('ENV')
 
 
     print("mqtt host : " + MQTT_BROKER_HOST)
